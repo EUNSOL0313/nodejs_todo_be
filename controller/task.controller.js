@@ -22,7 +22,7 @@ taskController.getTask = async (req, res) => {
    }
 }
 
-taskController.putTask = async (req, res) => {
+taskController.updateTask = async (req, res) => {
    try {
       const task = await Task.findById(req.params.id)
       if (!task) {
