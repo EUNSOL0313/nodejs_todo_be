@@ -8,8 +8,8 @@ taskController.createTask = async (req, res) => {
       const newTask = new Task({ task, isComplete })
       await newTask.save()
       res.status(200).json({ status: 'ok', data: newTask })
-   } catch (err) {
-      res.status(400).json({ status: 'fail', error: err })
+   } catch (error) {
+      res.status(400).json({ status: 'fail', error })
    }
 }
 
@@ -17,8 +17,8 @@ taskController.getTask = async (req, res) => {
    try {
       const tasklist = await Task.find({}).select('-__v')
       res.status(200).json({ status: 'ok', data: tasklist })
-   } catch (err) {
-      res.status(400).json({ status: 'fail', error: err })
+   } catch (error) {
+      res.status(400).json({ status: 'fail', error })
    }
 }
 
@@ -32,8 +32,8 @@ taskController.updateTask = async (req, res) => {
       fields.map((item) => (task[item] = req.body[item]))
       await task.save()
       res.status(200).json({ status: 'ok', data: task })
-   } catch (err) {
-      res.status(400).json({ status: 'fail', error: err })
+   } catch (error) {
+      res.status(400).json({ status: 'fail', error })
    }
 }
 
@@ -41,8 +41,8 @@ taskController.deleteTask = async (req, res) => {
    try {
       const deleteItem = await Task.findByIdAndDelete(req.params.id)
       res.status(200).json({ status: 'ok', data: deleteItem })
-   } catch (err) {
-      res.status(400).json({ status: 'fail', error: err })
+   } catch (error) {
+      res.status(400).json({ status: 'fail', error })
    }
 }
 
