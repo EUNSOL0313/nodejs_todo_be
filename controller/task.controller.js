@@ -5,7 +5,12 @@ const taskController = {}
 taskController.createTask = async (req, res) => {
    try {
       const { task, isComplete } = req.body
-      const newTask = new Task({ task, isComplete })
+
+      const { userId } = req
+      //const newTask = new Task({ task, isComplete})
+
+      //미들웨어 사용으로 auth 가져오기
+      const newTask = new Task({ task, isComplete, author: userId })
       await newTask.save()
       res.status(200).json({ status: 'ok', data: newTask })
    } catch (error) {
@@ -15,7 +20,8 @@ taskController.createTask = async (req, res) => {
 
 taskController.getTask = async (req, res) => {
    try {
-      const tasklist = await Task.find({}).select('-__v')
+      const tasklist = await Task.find({}).populate('author').select('-__v')
+      console.log('ttt', tasklist)
       res.status(200).json({ status: 'ok', data: tasklist })
    } catch (error) {
       res.status(400).json({ status: 'fail', error })
